@@ -11,6 +11,10 @@ ifconfig -a >$directory/ifconfig.txt
 route -ne >$directory/route.txt
 arp -an >$directory/arp.txt
 
+dmesg >$directory/dmesg.txt
+lsusb >$directory/lsusb.txt
+lspci >$directory/lspci.txt
+
 cat /proc/cpuinfo >$directory/cpuinfo.txt
 cat /proc/meminfo >$directory/meminfo.txt
 cat /proc/partitions >$directory/partitions.txt
