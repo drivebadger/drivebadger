@@ -1,23 +1,22 @@
 #!/bin/sh
 
-/opt/drives/internal/delay.sh
+/opt/drives/internal/kali/delay.sh
 
-perdev=`/opt/drives/internal/get-kali-persistent-partitions.sh |head -n 1`
+perdev=`/opt/drives/internal/kali/get-persistent-partitions.sh |head -n 1`
 
 if [ "$perdev" != "" ]; then
 	target_partition=`basename $perdev`
 	target_drive=`echo $target_partition |sed 's/[0-9]//g'`
 
-	raw_device=`/opt/drives/internal/get-raw-device.sh $perdev`  # sdb3 or dm-0
+	raw_device=`/opt/drives/internal/generic/get-raw-device.sh $perdev`  # sdb3 or dm-0
 	logger "persistent partition $perdev on device $raw_device"
 
-	dt=`date +%Y%m%d`
-	id=`/opt/drives/internal/get-computer-id.sh`
-	remote_directory=/run/live/persistence/$target_partition/.files/.data/$dt
+	id=`/opt/drives/internal/generic/get-computer-id.sh`
+	remote_directory=`/opt/drives/internal/kali/get-target-directory.sh $target_partition`
 	target_directory=$remote_directory/$id
 
 	mkdir -p $target_directory
-	/opt/drives/internal/dump-debug-files.sh $target_directory
+	/opt/drives/internal/generic/dump-debug-files.sh $target_directory
 
 	for uuid in `ls /dev/disk/by-uuid`; do
 		tmp=`readlink /dev/disk/by-uuid/$uuid`
@@ -29,11 +28,11 @@ if [ "$perdev" != "" ]; then
 		elif [ "$uuid_drive" = "$target_drive" ]; then
 			logger "skipping UUID=$uuid (partition $uuid_partition lays on the same target drive $target_drive as target partition $target_partition)"
 		else
-			fs=`/opt/drives/internal/get-partition-fs-type.sh $uuid_partition`
+			fs=`/opt/drives/internal/generic/get-partition-fs-type.sh $uuid_partition`
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $uuid_partition)"
 			else
-				drive_serial=`/opt/drives/internal/get-drive-serial.sh $uuid_drive $target_directory`
+				drive_serial=`/opt/drives/internal/generic/get-drive-serial.sh $uuid_drive $target_directory`
 				src=/media/$uuid_partition/mnt
 				subtarget=$target_directory/$drive_serial/${uuid_partition}_${fs}
 				mkdir -p $src $subtarget
