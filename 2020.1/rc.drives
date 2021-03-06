@@ -6,7 +6,7 @@ perdev=`/opt/drives/internal/kali/get-persistent-partitions.sh |head -n 1`
 
 if [ "$perdev" != "" ]; then
 	target_partition=`basename $perdev`
-	target_drive=`echo $target_partition |sed 's/[0-9]//g'`
+	target_drive=`/opt/drives/internal/generic/get-partition-drive.sh $target_partition`
 
 	raw_device=`/opt/drives/internal/generic/get-raw-device.sh $perdev`  # sdb3 or dm-0
 	logger "persistent partition $perdev on device $raw_device"
@@ -21,7 +21,7 @@ if [ "$perdev" != "" ]; then
 	for uuid in `ls /dev/disk/by-uuid`; do
 		tmp=`readlink /dev/disk/by-uuid/$uuid`
 		uuid_partition=`basename $tmp`  # dm-0 is handled properly below, but dm-1 etc. not - fix before reusing this code in different context
-		uuid_drive=`echo $uuid_partition |sed 's/[0-9]//g'`
+		uuid_drive=`/opt/drives/internal/generic/get-partition-drive.sh $uuid_partition`
 
 		if [ "$uuid_partition" = "$raw_device" ] || [ "$uuid_partition" = "$target_partition" ]; then
 			logger "skipping UUID=$uuid (partition $uuid_partition matches target $target_partition)"
