@@ -39,10 +39,10 @@ if [ "$perdev" != "" ]; then
 
 				# no specific support for encrypted drives (LUKS, loop-aes, Bitlocker etc.) - just raise an error here
 				if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log; then
-					/opt/drives/internal/process-hooks.sh $mountpoint $target_root_directory
+					/opt/drives/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 					logger "copying UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, target directory $subtarget)"
-					nohup /opt/drives/internal/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+					nohup /opt/drives/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
 				fi
 			fi
 		fi

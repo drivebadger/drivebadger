@@ -2,7 +2,7 @@
 
 src=$1
 target=$2
-lists=`/opt/drives/internal/get-rsync-exclusion-lists.sh`
+lists=`/opt/drives/internal/generic/get-rsync-exclusion-lists.sh`
 
 echo "### BEGIN `date +'%Y-%m-%d %H:%M:%S'` ###"
 
