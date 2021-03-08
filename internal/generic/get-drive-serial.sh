@@ -1,10 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 drive=$1
 directory=$2
 
 if [ ! -f $directory/$drive.txt ]; then
-	hdparm -I /dev/$drive >$directory/$drive.txt
+	if [[ $drive =~ ^nvme ]]; then
+		nvme id-ctrl /dev/$drive >$directory/$drive.txt
+	else
+		hdparm -I /dev/$drive >$directory/$drive.txt
+	fi
 fi
 
-grep -i serial $directory/$drive.txt |head -n 1 |cut -d':' -f2 |sed 's/[ \t]//g'
+if [[ $drive =~ ^nvme ]]; then
+	key=sn
+else
+	key=SerialNumber
+fi
+
+cat $directory/$drive.txt |tr -d ' \t' |grep ^$key: |cut -d':' -f2

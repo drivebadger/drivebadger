@@ -1,6 +1,6 @@
 #!/bin/sh
 
-apt-get install mc htop python-configparser
+apt-get install mc htop python-configparser nvme-cli dislocker
 
 if [ -f /etc/rc.drives ]; then
 	cp rc.drives /etc
