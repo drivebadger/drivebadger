@@ -54,20 +54,24 @@ if [ "$perdev" != "" ]; then
 
 		logger "attempting to decrypt Bitlocker encrypted partition $current_partition"
 		bitlocker_mount=/media/bitlocker/$current_partition
-		mountpoint=/media/$current_partition/mnt
-		subtarget=$target_directory/$drive_serial/${current_partition}_bitlocker
-		mkdir -p $bitlocker_mount $mountpoint $subtarget
+		mkdir -p $bitlocker_mount
 
 		for recovery_key in `/opt/drives/internal/generic/get-bitlocker-keys.sh`; do
-			if dislocker /dev/$current_partition -p$recovery_key -- $bitlocker_mount >>$subtarget/rsync.log; then
+			if dislocker /dev/$current_partition -p$recovery_key -- $bitlocker_mount >>$target_directory/$current_partition.log; then
+
+				mountpoint=/media/$current_partition/mnt
+				subtarget=$target_directory/$drive_serial/${current_partition}_bitlocker
+				mkdir -p $mountpoint $subtarget
 				echo $recovery_key >$subtarget/bitlocker.key
+
 				if mount -o ro $bitlocker_mount/dislocker-file $mountpoint >>$subtarget/rsync.log; then
 					/opt/drives/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 					logger "copying BITLOCKER (partition $current_partition filesystem ntfs, mounted as $mountpoint, target directory $subtarget)"
 					nohup /opt/drives/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
-					umount $bitlocker_mount
 				fi
+
+				umount $bitlocker_mount
 			fi
 		done
 	done
