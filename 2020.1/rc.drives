@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/opt/drives/internal/kali/delay.sh
-/opt/drives/internal/kali/main.sh
+/opt/drivebadger/internal/kali/delay.sh
+/opt/drivebadger/internal/kali/main.sh

@@ -1,11 +1,11 @@
 [Unit]
-Description=Drive Processor
-ConditionPathExists=/etc/rc.drives
+Description=Drive Badger
+ConditionPathExists=/etc/rc.drivebadger
 After=local-fs.target systemd-tmpfiles-setup.service rsyslog.service
 
 [Service]
 Type=forking
-ExecStart=/etc/rc.drives
+ExecStart=/etc/rc.drivebadger
 TimeoutSec=0
 StandardOutput=tty
 RemainAfterExit=yes

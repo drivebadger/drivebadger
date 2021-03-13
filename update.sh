@@ -1,11 +1,11 @@
 #!/bin/sh
 
 update="
-/opt/drives
-`ls -d /opt/drives/config/* 2>/dev/null`
-`ls -d /opt/drives/hooks/* 2>/dev/null`
+/opt/drivebadger
+`ls -d /opt/drivebadger/config/* 2>/dev/null`
+`ls -d /opt/drivebadger/hooks/* 2>/dev/null`
 "
 
 for PD in $update; do
-	/opt/drives/internal/git/pull.sh $PD
+	/opt/drivebadger/internal/git/pull.sh $PD
 done

@@ -1,17 +1,17 @@
 # Overview
 
-This is a core repository for Raptor product. You can visit its homepage for more details: https://payload.pl/raptor/
+This is a core repository for Drive Badger product. You can visit its homepage for more details: https://drivebadger.com/
 
-This software is meant to be used only by police officers, special agents, or other eligible entities. Its usage is always a subject to local legislation, and its user is solely responsible for all potential law infringements and/or misfeasances of duties. Intention of this product, is not an incitement for a crime. Rather, Raptor is mainly intended to be used in countries, where using such tools is legal, or at most, can be a subject to possible disciplinary action between the end user and his/her employer.
+This software is meant to be used only by police officers, special agents, or other eligible entities. Its usage is always a subject to local legislation, and its user is solely responsible for all potential law infringements and/or misfeasances of duties. Intention of this product, is not an incitement for a crime. Rather, Drive Badger is mainly intended to be used in countries, where using such tools is legal, or at most, can be a subject to possible disciplinary action between the end user and his/her employer.
 
-Raptor is meant to be integrated with Kali Linux Live on external USB drive.
+Drive Badger is meant to be integrated with Kali Linux Live on external USB drive.
 
 How it works:
 
 - user connects USB drive to someone's computer
 - user boots Kali Linux from that drive in Persistent mode (preferably with LUKS encryption)
 - Kali Linux starts in text mode
-- `/etc/rc.drives` script is run in background
+- `/etc/rc.drivebadger` script is run in background
 - it enumerates computer drives, and makes a copy of (almost) all data from all other recognized drives (including softraid) to user's USB drive
 - console with pre-logged `kali` user stays available, allowing user to run anything else, to hide the real reason for running Kali Linux
 
@@ -31,19 +31,19 @@ you can use much stronger encryption/hashing related parameters, to avoid brute 
 
 `cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --debug --verify-passphrase luksFormat /dev/sdb3`
 
-4. Just before unmounting the third partition according to the manual, copy this repository contents as `/run/live/persistence/sdb3/rw/opt/drives`.
+4. Just before unmounting the third partition according to the manual, copy this repository contents as `/run/live/persistence/sdb3/rw/opt/drivebadger`.
 
-5. If you have access to commercial extensions, clone them into `/run/live/persistence/sdb3/rw/opt/drives/config` and `/run/live/persistence/sdb3/rw/opt/drives/hooks` subdirectories.
+5. If you have access to commercial extensions, clone them into `/run/live/persistence/sdb3/rw/opt/drivebadger/config` and `/run/live/persistence/sdb3/rw/opt/drivebadger/hooks` subdirectories.
 
 6. Boot Kali Linux from your prepared USB device and make sure that it runs properly. You will get the graphical mode by default.
 
 7. Open the terminal, execute `sudo su -` to become root, and execute:
 
-`cd /opt/drives/2020.1 && ./install.sh`
+`cd /opt/drivebadger/2020.1 && ./install.sh`
 
 This command does 3 things:
 
-- installs `/etc/rc.drives` as systemd service (it will run automatically on each another reboot)
+- installs `/etc/rc.drivebadger` as systemd service (it will run automatically on each another reboot)
 - enables ssh server to also run automatically after each reboot
 - disables graphical mode
 
@@ -51,7 +51,7 @@ This command does 3 things:
 
 ## Free vs commercial version
 
-This repository contains the complete free version of Raptor. Commercial version uses the same code, and just extends it using external repositories cloned into `config` and `hooks` subdirectories. You are welcome to write your own extensions as well.
+This repository contains the complete free version of Drive Badger. Commercial version uses the same code, and just extends it using external repositories cloned into `config` and `hooks` subdirectories. You are welcome to write your own extensions as well.
 
 ## Performance of LUKS vs no encryption
 
@@ -80,7 +80,7 @@ On the other hand, SSD drives are more expensive, and bigger, harder to hide and
 
 ## Why not wait for full network configuration
 
-Systemd configuration for `rc-drives` service requires only drives/filesystems related configuration, and running rsyslog.
+Systemd configuration for `rc-drivebadger` service requires only drives/filesystems related configuration, and running rsyslog.
 
 It doesn't wait for DHCP or full network configuration, which can result in identifying computers only after model name, without IP address - however this behavior is intentional. Instead it sleeps for at least 7 seconds (currently 15) to give time to the network stack, to configure itself and get the IP address from DHCP.
 

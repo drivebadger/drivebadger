@@ -20,7 +20,7 @@ DIR="`pwd`"
 cd $target
 
 if grep -q git@ $target/.git/config && [ -f ~/.ssh/id_github_$repo ]; then
-	GIT_SSH=/opt/drives/internal/git/helper.sh GIT_KEY=~/.ssh/id_github_$repo git pull
+	GIT_SSH=/opt/drivebadger/internal/git/helper.sh GIT_KEY=~/.ssh/id_github_$repo git pull
 else
 	git pull
 fi
