@@ -21,9 +21,9 @@ Detailed manual can be found [here](https://github.com/drivebadger/drivebadger/w
 
 TL;DR:
 
-- prepare USB device with Kali Linux (see [recommended hardware](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware)
+- prepare USB device with Kali Linux (see [recommended hardware](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware))
 - configure persistent partition (preferably with [LUKS encryption](https://github.com/drivebadger/drivebadger/wiki/LUKS-performance))
-- install Drive Badger by just git-cloning this repository and a few others
+- install Drive Badger by git-cloning this repository and a few others (use this simple [install script](https://github.com/drivebadger/drivebadger/wiki/Install-script))
 
 
 # Legal information
@@ -34,7 +34,7 @@ This software was written and is meant to be **used only by eligible entities**,
 - special agents
 - intelligence officers
 - military forces
-- private detectives
+- private investigators
 - corporate red teams
 - diplomats or other people with personal immunity
 
