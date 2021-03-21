@@ -3,8 +3,8 @@
 apt-get install mc htop nvme-cli dislocker
 
 configparser=/opt/drivebadger/config/compat/deb/python-configparser_3.5.0b2-3.1_all.deb
-if [ -f $onfigparser ]; then
-	dpkg -i $onfigparser
+if [ -f $configparser ]; then
+	dpkg -i $configparser
 fi
 
 if [ ! -f /etc/rc.drivebadger ]; then
