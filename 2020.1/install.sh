@@ -1,6 +1,6 @@
 #!/bin/sh
 
-apt-get install mc htop python-configparser nvme-cli dislocker
+apt-get install mc htop python-configparser nvme-cli dislocker libfsapfs-utils
 
 if [ ! -f /etc/rc.drivebadger ]; then
 	cp /opt/drivebadger/internal/systemd/rc.drivebadger /etc

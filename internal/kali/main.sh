@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 perdev=`/opt/drivebadger/internal/kali/get-persistent-partitions.sh |head -n 1`
 
@@ -27,10 +27,27 @@ if [ "$perdev" != "" ]; then
 			logger "skipping UUID=$uuid (partition $current_partition lays on the same target drive $target_drive as target partition $target_partition)"
 		else
 			fs=`/opt/drivebadger/internal/generic/get-partition-fs-type.sh $current_partition`
+			drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $current_partition)"
+			elif [ "$fs" = "apfs" ]; then
+				slices=`/opt/drivebadger/internal/generic/get-apfs-filesystems.sh /dev/$current_partition`
+				for slice in $slices; do
+					slid="${slice%:*}"
+					slname="${slice##*:}"
+
+					mountpoint=/media/$current_partition/$slid/mnt
+					subtarget=$target_directory/$drive_serial/${current_partition}_${fs}_${slid}_${slname}
+					mkdir -p $mountpoint $subtarget
+
+					if fsapfsmount -f $slid /dev/$current_partition $mountpoint >>$subtarget/rsync.log; then
+						/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
+
+						logger "copying UUID=$uuid (partition $current_partition filesystem $fs slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
+						nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+					fi
+				done
 			else
-				drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 				mountpoint=/media/$current_partition/mnt
 				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
 				mkdir -p $mountpoint $subtarget
