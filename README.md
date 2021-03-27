@@ -1,6 +1,10 @@
 # Overview
 
-Drive Badger is a framework for secure, automated, huge scale, time-effective data exfiltration from computers running any version of Windows (including Windows Server and Windows Embedded) or Linux.
+Drive Badger is a framework for secure, automated, huge scale, time-effective data exfiltration from computers running any version of:
+
+- Windows (including Windows Server and Windows Embedded)
+- Linux
+- Mac OS (including support for new APFS filesystem)
 
 It runs on any size of hardware, from mini-pcs, through laptops, desktop computers, up to big servers (see [hardware compatibility list](https://github.com/drivebadger/drivebadger/wiki/Hardware-compatibility-list)). Basically on anything, that can run [Kali Linux](https://github.com/drivebadger/drivebadger/wiki/Kali-Linux), and have at least 1 working USB port.
 
