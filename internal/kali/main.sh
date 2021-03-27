@@ -40,7 +40,7 @@ if [ "$perdev" != "" ]; then
 					subtarget=$target_directory/$drive_serial/${current_partition}_${fs}_${slid}_${slname}
 					mkdir -p $mountpoint $subtarget
 
-					if fsapfsmount -f $slid /dev/$current_partition $mountpoint >>$subtarget/rsync.log; then
+					if /opt/drivebadger/internal/generic/mount-apfs-filesystem.sh /dev/$current_partition $slid $mountpoint >>$subtarget/rsync.log; then
 						/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 						logger "copying UUID=$uuid (partition $current_partition filesystem $fs slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
