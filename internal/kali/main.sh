@@ -1,6 +1,6 @@
 #!/bin/bash
 
-perdev=`/opt/drivebadger/internal/kali/get-persistent-partitions.sh |head -n 1`
+perdev=`/opt/drivebadger/internal/kali/get-first-persistent-partition.sh`
 
 if [ "$perdev" != "" ]; then
 	target_partition=`basename $perdev`
