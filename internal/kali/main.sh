@@ -47,6 +47,29 @@ if [ "$perdev" != "" ]; then
 						nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
 					fi
 				done
+
+			elif [ "$fs" = "crypto_LUKS" ]; then
+				logger "attempting to decrypt LUKS encrypted partition $current_partition"
+				mountpoint=/media/$current_partition/mnt
+				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
+				mkdir -p $mountpoint $subtarget
+
+				for recovery_key in `/opt/drivebadger/internal/generic/get-luks-keys.sh`; do
+					echo "$recovery_key" |cryptsetup -q luksOpen /dev/$current_partition luks_$current_partition
+					if [ -e /dev/mapper/luks_$current_partition ]; then
+
+						echo $recovery_key >$subtarget/luks.key
+						mount -o ro /dev/mapper/luks_$current_partition $mountpoint >>$subtarget/rsync.log
+						/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
+
+						logger "copying UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, target directory $subtarget)"
+						nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+
+						cryptsetup luksClose luks_$current_partition
+						break
+					fi
+				done
+
 			else
 				mountpoint=/media/$current_partition/mnt
 				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
@@ -89,6 +112,7 @@ if [ "$perdev" != "" ]; then
 				fi
 
 				umount $bitlocker_mount
+				break
 			fi
 		done
 	done
