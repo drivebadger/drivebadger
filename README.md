@@ -27,17 +27,25 @@ This is a core repository for Drive Badger product. You can visit its homepage f
 
 # Further reading
 
-1. [Why ever use Drive Badger? This can be done manually, or by ad-hoc script.](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(beginner))
-2. [Legal and risk-related questions: when using Drive Badger is legal?](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(legal))
-3. [Recommended hardware - before you buy anything...](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware))
-4. [How to start?](https://github.com/drivebadger/drivebadger/wiki/How-to-start%3F)
-5. [Installatio manual](https://github.com/drivebadger/drivebadger/wiki/Installing) and [ready to use install script](https://github.com/drivebadger/drivebadger/wiki/Install-script)).
-6. [How to configure encryption keys?](https://github.com/drivebadger/drivebadger/wiki/How-to-configure-encryption-keys%3F)
-7. [Understanding the attack phases](https://github.com/drivebadger/drivebadger/wiki/Understanding-the-attack-phases)
-8. [Planning the big attack](https://github.com/drivebadger/drivebadger/wiki/Planning-the-big-attack)
-9. [Troubleshooting](https://github.com/drivebadger/drivebadger/wiki/Troubleshooting)
-10. [News](https://github.com/drivebadger/drivebadger/wiki/News)
-11. [Project roadmap](https://github.com/drivebadger/drivebadger/wiki/Roadmap)
+Is Drive Badger for me?
+
+- [Why ever use Drive Badger? This can be done manually, or by ad-hoc script.](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(beginner))
+- [Legal and risk-related questions: when using Drive Badger is legal?](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(legal))
+- [Recommended hardware - before you buy anything...](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware)
+
+Ok, I'm interested, what should I read next?
+
+- [How to start?](https://github.com/drivebadger/drivebadger/wiki/How-to-start%3F)
+- [Installation manual](https://github.com/drivebadger/drivebadger/wiki/Installing) and [ready to use install script](https://github.com/drivebadger/drivebadger/wiki/Install-script).
+- [Understanding the attack phases](https://github.com/drivebadger/drivebadger/wiki/Understanding-the-attack-phases)
+- [Planning the big attack](https://github.com/drivebadger/drivebadger/wiki/Planning-the-big-attack)
+- [How to configure drive encryption keys before attack?](https://github.com/drivebadger/drivebadger/wiki/How-to-configure-encryption-keys%3F)
+- [Troubleshooting](https://github.com/drivebadger/drivebadger/wiki/Troubleshooting)
+
+I want to stay current...
+
+- [News](https://github.com/drivebadger/drivebadger/wiki/News)
+- [Project roadmap](https://github.com/drivebadger/drivebadger/wiki/Roadmap)
 
 
 # Legal information
