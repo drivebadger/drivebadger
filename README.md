@@ -25,15 +25,19 @@ and use them to automatically expand the attack surface:
 This is a core repository for Drive Badger product. You can visit its homepage for more details: https://drivebadger.com/
 
 
-# Installing
+# Further reading
 
-Detailed manual can be found [here](https://github.com/drivebadger/drivebadger/wiki/Installing).
-
-TL;DR:
-
-- prepare USB device with Kali Linux (see [recommended hardware](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware))
-- configure persistent partition (preferably with [LUKS encryption](https://github.com/drivebadger/drivebadger/wiki/LUKS-performance))
-- install Drive Badger by git-cloning this repository and a few others (use this simple [install script](https://github.com/drivebadger/drivebadger/wiki/Install-script))
+1. [Why ever use Drive Badger? This can be done manually, or by ad-hoc script.](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(beginner))
+2. [Legal and risk-related questions: when using Drive Badger is legal?](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(legal))
+3. [Recommended hardware - before you buy anything...](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware))
+4. [How to start?](https://github.com/drivebadger/drivebadger/wiki/How-to-start%3F)
+5. [Installatio manual](https://github.com/drivebadger/drivebadger/wiki/Installing) and [ready to use install script](https://github.com/drivebadger/drivebadger/wiki/Install-script)).
+6. [How to configure encryption keys?](https://github.com/drivebadger/drivebadger/wiki/How-to-configure-encryption-keys%3F)
+7. [Understanding the attack phases](https://github.com/drivebadger/drivebadger/wiki/Understanding-the-attack-phases)
+8. [Planning the big attack](https://github.com/drivebadger/drivebadger/wiki/Planning-the-big-attack)
+9. [Troubleshooting](https://github.com/drivebadger/drivebadger/wiki/Troubleshooting)
+10. [News](https://github.com/drivebadger/drivebadger/wiki/News)
+11. [Project roadmap](https://github.com/drivebadger/drivebadger/wiki/Roadmap)
 
 
 # Legal information
