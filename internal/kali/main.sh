@@ -75,7 +75,7 @@ if [ "$perdev" != "" ]; then
 				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
 				mkdir -p $mountpoint $subtarget
 
-				# no specific support for encrypted drives (LUKS, loop-aes, TrueCrypt, VeraCrypt etc.) - just raise an error here
+				# no specific support for encrypted drives (loop-aes, TrueCrypt etc.) - just raise an error here
 				if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log; then
 					/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
@@ -93,17 +93,15 @@ if [ "$perdev" != "" ]; then
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
 		logger "attempting to decrypt Bitlocker encrypted partition $current_partition"
+		mountpoint=/media/$current_partition/mnt
 		bitlocker_mount=/media/bitlocker/$current_partition
-		mkdir -p $bitlocker_mount
+		subtarget=$target_directory/$drive_serial/${current_partition}_encrypted
+		mkdir -p $mountpoint $subtarget $bitlocker_mount
 
 		for recovery_key in `/opt/drivebadger/internal/generic/get-bitlocker-keys.sh`; do
 			if dislocker /dev/$current_partition -p$recovery_key -- $bitlocker_mount >>$target_directory/$current_partition.log; then
 
-				mountpoint=/media/$current_partition/mnt
-				subtarget=$target_directory/$drive_serial/${current_partition}_bitlocker
-				mkdir -p $mountpoint $subtarget
 				echo $recovery_key >$subtarget/bitlocker.key
-
 				if mount -o ro $bitlocker_mount/dislocker-file $mountpoint >>$subtarget/rsync.log; then
 					/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
@@ -115,6 +113,22 @@ if [ "$perdev" != "" ]; then
 				break
 			fi
 		done
+
+		if [ -d /opt/drivebadger/external/ext-veracrypt ]; then
+			logger "attempting to decrypt VeraCrypt encrypted system partition $current_partition"
+
+			for recovery_key in `/opt/drivebadger/internal/generic/get-veracrypt-keys.sh`; do
+				if /opt/drivebadger/external/ext-veracrypt/wrapper.sh -t -k="" -p $recovery_key --pim=0 --mount-options=readonly,system --non-interactive /dev/$current_partition $mountpoint 2>>/dev/null; then
+
+					echo $recovery_key >$subtarget/veracrypt.key
+					/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
+
+					logger "copying VERACRYPT (partition $current_partition filesystem ntfs, mounted as $mountpoint, target directory $subtarget)"
+					nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+					break
+				fi
+			done
+		fi
 	done
 
 	logger "finished processing drives and partitions"

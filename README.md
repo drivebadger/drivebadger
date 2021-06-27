@@ -10,9 +10,10 @@ It runs on any size of hardware, from mini-pcs, through laptops, desktop compute
 
 It is able to exfiltrate data off encrypted hard drives - it currently supports the following encryption schemes:
 
-- [Bitlocker](https://github.com/drivebadger/drivebadger/wiki/Bitlocker-support)
-- [FileVault](https://github.com/drivebadger/drivebadger/wiki/FileVault-support)
-- [LUKS](https://github.com/drivebadger/drivebadger/wiki/LUKS-support)
+- [Bitlocker](https://github.com/drivebadger/drivebadger/wiki/Encryption-support-(Bitlocker))
+- [FileVault](https://github.com/drivebadger/drivebadger/wiki/Encryption-support-(FileVault))
+- [VeraCrypt](https://github.com/drivebadger/drivebadger/wiki/Encryption-support-(VeraCrypt))
+- [LUKS](https://github.com/drivebadger/drivebadger/wiki/Encryption-support-(LUKS))
 
 Support for other encryption schemes is also planned (see [project roadmap](https://github.com/drivebadger/drivebadger/wiki/Roadmap)).
 

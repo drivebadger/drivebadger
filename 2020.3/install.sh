@@ -1,8 +1,8 @@
 #!/bin/sh
 
-apt-get install mc htop nvme-cli dislocker libfsapfs-utils
+apt-get install mc htop nvme-cli dislocker libfsapfs-utils libfuse2
 
-configparser=/opt/drivebadger/config/compat/deb/python-configparser_3.5.0b2-3.1_all.deb
+configparser=/opt/drivebadger/external/compat/deb/python-configparser_3.5.0b2-3.1_all.deb
 if [ -f $configparser ]; then
 	dpkg -i $configparser
 fi
