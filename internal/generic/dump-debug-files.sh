@@ -15,6 +15,9 @@ dmesg >$directory/dmesg.txt
 lsusb >$directory/lsusb.txt
 lspci >$directory/lspci.txt
 
+lsblk >$directory/lsblk.txt
+blkid >$directory/blkid.txt
+
 cat /proc/cpuinfo >$directory/cpuinfo.txt
 cat /proc/meminfo >$directory/meminfo.txt
 cat /proc/partitions >$directory/partitions.txt
