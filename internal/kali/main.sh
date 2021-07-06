@@ -114,7 +114,7 @@ if [ "$perdev" != "" ]; then
 			fi
 		done
 
-		if [ -d /opt/drivebadger/external/ext-veracrypt ]; then
+		if [ -d /opt/drivebadger/external/ext-veracrypt ] && [ ! -f $subtarget/bitlocker.key ]; then
 			logger "attempting to decrypt VeraCrypt encrypted system partition $current_partition"
 
 			for recovery_key in `/opt/drivebadger/internal/generic/get-veracrypt-keys.sh`; do
