@@ -31,7 +31,7 @@ if [ "$perdev" != "" ]; then
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $current_partition)"
 			elif [ "$fs" = "apfs" ]; then
-				slices=`/opt/drivebadger/internal/generic/get-apfs-filesystems.sh /dev/$current_partition`
+				slices=`/opt/drivebadger/internal/generic/apple/get-apfs-filesystems.sh /dev/$current_partition`
 				for slice in $slices; do
 					slid="${slice%:*}"
 					slname="${slice##*:}"
@@ -40,7 +40,7 @@ if [ "$perdev" != "" ]; then
 					subtarget=$target_directory/$drive_serial/${current_partition}_${fs}_${slid}_${slname}
 					mkdir -p $mountpoint $subtarget
 
-					if /opt/drivebadger/internal/generic/mount-apfs-filesystem.sh /dev/$current_partition $slid $mountpoint >>$subtarget/rsync.log; then
+					if /opt/drivebadger/internal/generic/apple/mount-apfs-filesystem.sh /dev/$current_partition $slid $mountpoint >>$subtarget/rsync.log; then
 						/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 						logger "copying UUID=$uuid (partition $current_partition filesystem $fs slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
@@ -54,7 +54,7 @@ if [ "$perdev" != "" ]; then
 				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
 				mkdir -p $mountpoint $subtarget
 
-				for recovery_key in `/opt/drivebadger/internal/generic/get-luks-keys.sh`; do
+				for recovery_key in `/opt/drivebadger/internal/generic/keys/get-luks-keys.sh`; do
 					echo "$recovery_key" |cryptsetup -q luksOpen /dev/$current_partition luks_$current_partition
 					if [ -e /dev/mapper/luks_$current_partition ]; then
 
@@ -88,7 +88,7 @@ if [ "$perdev" != "" ]; then
 
 	# now process encrypted drives
 
-	for current_partition in `/opt/drivebadger/internal/kali/get-udev-unrecognized-devices.sh`; do
+	for current_partition in `/opt/drivebadger/internal/generic/get-udev-unrecognized-devices.sh`; do
 		current_drive=`/opt/drivebadger/internal/generic/get-partition-drive.sh $current_partition`
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
@@ -98,7 +98,7 @@ if [ "$perdev" != "" ]; then
 		subtarget=$target_directory/$drive_serial/${current_partition}_encrypted
 		mkdir -p $mountpoint $subtarget $bitlocker_mount
 
-		for recovery_key in `/opt/drivebadger/internal/generic/get-bitlocker-keys.sh`; do
+		for recovery_key in `/opt/drivebadger/internal/generic/keys/get-bitlocker-keys.sh`; do
 			if dislocker /dev/$current_partition -p$recovery_key -- $bitlocker_mount >>$target_directory/$current_partition.log; then
 
 				echo $recovery_key >$subtarget/bitlocker.key
@@ -117,7 +117,7 @@ if [ "$perdev" != "" ]; then
 		if [ -d /opt/drivebadger/external/ext-veracrypt ] && [ ! -f $subtarget/bitlocker.key ]; then
 			logger "attempting to decrypt VeraCrypt encrypted system partition $current_partition"
 
-			for recovery_key in `/opt/drivebadger/internal/generic/get-veracrypt-keys.sh`; do
+			for recovery_key in `/opt/drivebadger/internal/generic/keys/get-veracrypt-keys.sh`; do
 				if /opt/drivebadger/external/ext-veracrypt/wrapper.sh -t -k="" -p $recovery_key --pim=0 --mount-options=readonly,system --non-interactive /dev/$current_partition $mountpoint 2>>/dev/null; then
 
 					echo $recovery_key >$subtarget/veracrypt.key
