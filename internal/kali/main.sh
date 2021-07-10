@@ -28,60 +28,15 @@ if [ "$perdev" != "" ]; then
 		else
 			fs=`/opt/drivebadger/internal/generic/get-partition-fs-type.sh $current_partition`
 			drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
+
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $current_partition)"
 			elif [ "$fs" = "apfs" ]; then
-				slices=`/opt/drivebadger/internal/generic/apple/get-apfs-filesystems.sh /dev/$current_partition`
-				for slice in $slices; do
-					slid="${slice%:*}"
-					slname="${slice##*:}"
-
-					mountpoint=/media/$current_partition/$slid/mnt
-					subtarget=$target_directory/$drive_serial/${current_partition}_${fs}_${slid}_${slname}
-					mkdir -p $mountpoint $subtarget
-
-					if /opt/drivebadger/internal/generic/apple/mount-apfs-filesystem.sh /dev/$current_partition $slid $mountpoint >>$subtarget/rsync.log; then
-						/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
-
-						logger "copying UUID=$uuid (partition $current_partition filesystem $fs slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
-						nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
-					fi
-				done
-
+				/opt/drivebadger/internal/kali/mount/apfs.sh $target_root_directory $target_directory "$drive_serial" $current_partition $uuid
 			elif [ "$fs" = "crypto_LUKS" ]; then
-				logger "attempting to decrypt LUKS encrypted partition $current_partition"
-				mountpoint=/media/$current_partition/mnt
-				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
-				mkdir -p $mountpoint $subtarget
-
-				for recovery_key in `/opt/drivebadger/internal/generic/keys/get-luks-keys.sh`; do
-					echo "$recovery_key" |cryptsetup -q luksOpen /dev/$current_partition luks_$current_partition
-					if [ -e /dev/mapper/luks_$current_partition ]; then
-
-						echo $recovery_key >$subtarget/luks.key
-						mount -o ro /dev/mapper/luks_$current_partition $mountpoint >>$subtarget/rsync.log
-						/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
-
-						logger "copying UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, target directory $subtarget)"
-						nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
-
-						cryptsetup luksClose luks_$current_partition
-						break
-					fi
-				done
-
+				/opt/drivebadger/internal/kali/mount/luks.sh $target_root_directory $target_directory "$drive_serial" $current_partition $uuid
 			else
-				mountpoint=/media/$current_partition/mnt
-				subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
-				mkdir -p $mountpoint $subtarget
-
-				# no specific support for encrypted drives (loop-aes, TrueCrypt etc.) - just raise an error here
-				if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log; then
-					/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
-
-					logger "copying UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, target directory $subtarget)"
-					nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
-				fi
+				/opt/drivebadger/internal/kali/mount/plain.sh $target_root_directory $target_directory "$drive_serial" $current_partition $uuid $fs
 			fi
 		fi
 	done
@@ -92,43 +47,7 @@ if [ "$perdev" != "" ]; then
 		current_drive=`/opt/drivebadger/internal/generic/get-partition-drive.sh $current_partition`
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
-		logger "attempting to decrypt Bitlocker encrypted partition $current_partition"
-		mountpoint=/media/$current_partition/mnt
-		bitlocker_mount=/media/bitlocker/$current_partition
-		subtarget=$target_directory/$drive_serial/${current_partition}_encrypted
-		mkdir -p $mountpoint $subtarget $bitlocker_mount
-
-		for recovery_key in `/opt/drivebadger/internal/generic/keys/get-bitlocker-keys.sh`; do
-			if dislocker /dev/$current_partition -p$recovery_key -- $bitlocker_mount >>$target_directory/$current_partition.log; then
-
-				echo $recovery_key >$subtarget/bitlocker.key
-				if mount -o ro $bitlocker_mount/dislocker-file $mountpoint >>$subtarget/rsync.log; then
-					/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
-
-					logger "copying BITLOCKER (partition $current_partition filesystem ntfs, mounted as $mountpoint, target directory $subtarget)"
-					nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
-				fi
-
-				umount $bitlocker_mount
-				break
-			fi
-		done
-
-		if [ -d /opt/drivebadger/external/ext-veracrypt ] && [ ! -f $subtarget/bitlocker.key ]; then
-			logger "attempting to decrypt VeraCrypt encrypted system partition $current_partition"
-
-			for recovery_key in `/opt/drivebadger/internal/generic/keys/get-veracrypt-keys.sh`; do
-				if /opt/drivebadger/external/ext-veracrypt/wrapper.sh -t -k="" -p $recovery_key --pim=0 --mount-options=readonly,system --non-interactive /dev/$current_partition $mountpoint 2>>/dev/null; then
-
-					echo $recovery_key >$subtarget/veracrypt.key
-					/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
-
-					logger "copying VERACRYPT (partition $current_partition filesystem ntfs, mounted as $mountpoint, target directory $subtarget)"
-					nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
-					break
-				fi
-			done
-		fi
+		/opt/drivebadger/internal/kali/mount/unrecognized.sh $target_root_directory $target_directory "$drive_serial" $current_partition
 	done
 
 	logger "finished processing drives and partitions"
