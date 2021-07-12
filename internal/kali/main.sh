@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 perdev=`/opt/drivebadger/internal/kali/get-first-persistent-partition.sh`
 
@@ -12,8 +12,9 @@ if [ "$perdev" != "" ]; then
 	id=`/opt/drivebadger/internal/generic/get-computer-id.sh`
 	target_root_directory=`/opt/drivebadger/internal/kali/get-target-directory.sh $target_partition`
 	target_directory=$target_root_directory/$id
+	keys_directory=`/opt/drivebadger/internal/kali/get-keys-directory.sh $target_partition`
 
-	mkdir -p $target_directory
+	mkdir -p $target_directory $keys_directory
 	/opt/drivebadger/internal/generic/dump-debug-files.sh $target_directory
 
 	for uuid in `ls /dev/disk/by-uuid`; do
@@ -32,11 +33,11 @@ if [ "$perdev" != "" ]; then
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $current_partition)"
 			elif [ "$fs" = "apfs" ]; then
-				/opt/drivebadger/internal/kali/mount/apfs.sh $target_root_directory $target_directory "$drive_serial" $current_partition $uuid
+				/opt/drivebadger/internal/kali/mount/apfs.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
 			elif [ "$fs" = "crypto_LUKS" ]; then
-				/opt/drivebadger/internal/kali/mount/luks.sh $target_root_directory $target_directory "$drive_serial" $current_partition $uuid
+				/opt/drivebadger/internal/kali/mount/luks.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
 			else
-				/opt/drivebadger/internal/kali/mount/plain.sh $target_root_directory $target_directory "$drive_serial" $current_partition $uuid $fs
+				/opt/drivebadger/internal/kali/mount/plain.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid $fs
 			fi
 		fi
 	done
@@ -47,7 +48,7 @@ if [ "$perdev" != "" ]; then
 		current_drive=`/opt/drivebadger/internal/generic/get-partition-drive.sh $current_partition`
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
-		/opt/drivebadger/internal/kali/mount/unrecognized.sh $target_root_directory $target_directory "$drive_serial" $current_partition
+		/opt/drivebadger/internal/kali/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition
 	done
 
 	logger "finished processing drives and partitions"

@@ -2,9 +2,10 @@
 
 target_root_directory=$1
 target_directory=$2
-drive_serial=$3
-current_partition=$4
-uuid=$5
+keys_directory=$3
+drive_serial=$4
+current_partition=$5
+uuid=$6
 
 
 logger "attempting to decrypt LUKS encrypted partition $current_partition"
@@ -17,6 +18,10 @@ for recovery_key in `/opt/drivebadger/internal/generic/keys/get-luks-keys.sh`; d
 	if [ -e /dev/mapper/luks_$current_partition ]; then
 
 		echo $recovery_key >$subtarget/luks.key
+		if [ "$drive_serial" != "" ] && ! grep -qFx $recovery_key $keys_directory/$drive_serial.luks 2>/dev/null; then
+			echo $recovery_key >>$keys_directory/$drive_serial.luks
+		fi
+
 		mount -o ro /dev/mapper/luks_$current_partition $mountpoint >>$subtarget/rsync.log
 		/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 

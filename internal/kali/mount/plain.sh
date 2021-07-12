@@ -2,10 +2,11 @@
 
 target_root_directory=$1
 target_directory=$2
-drive_serial=$3
-current_partition=$4
-uuid=$5
-fs=$6
+keys_directory=$3
+drive_serial=$4
+current_partition=$5
+uuid=$6
+fs=$7
 
 
 mountpoint=/media/$current_partition/mnt

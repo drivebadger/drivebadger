@@ -2,9 +2,10 @@
 
 target_root_directory=$1
 target_directory=$2
-drive_serial=$3
-current_partition=$4
-uuid=$5
+keys_directory=$3
+drive_serial=$4
+current_partition=$5
+uuid=$6
 
 
 slices=`/opt/drivebadger/internal/generic/apple/get-apfs-filesystems.sh /dev/$current_partition`
@@ -16,7 +17,7 @@ for slice in $slices; do
 	subtarget=$target_directory/$drive_serial/${current_partition}_apfs_${slid}_${slname}
 	mkdir -p $mountpoint $subtarget
 
-	if /opt/drivebadger/internal/generic/apple/mount-apfs-filesystem.sh /dev/$current_partition $slid $mountpoint >>$subtarget/rsync.log; then
+	if /opt/drivebadger/internal/generic/apple/mount-apfs-filesystem.sh $keys_directory "$drive_serial" /dev/$current_partition $slid $mountpoint $subtarget >>$subtarget/rsync.log; then
 		/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 		logger "copying UUID=$uuid (partition $current_partition filesystem APFS slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
