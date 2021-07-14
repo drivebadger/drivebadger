@@ -27,7 +27,7 @@ if [ "$perdev" != "" ]; then
 		elif [ "$current_drive" = "$target_drive" ]; then
 			logger "skipping UUID=$uuid (partition $current_partition lays on the same target drive $target_drive as target partition $target_partition)"
 		else
-			fs=`/opt/drivebadger/internal/generic/get-partition-fs-type.sh $current_partition`
+			fs=`/opt/drivebadger/internal/generic/get-partition-fs-type.sh $current_partition $target_directory`
 			drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
 			if [ "$fs" = "swap" ]; then
