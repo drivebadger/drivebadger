@@ -9,7 +9,6 @@ dirs="
 "
 
 for MD in $dirs; do
-	echo $MD
 	mkdir -p $MD
 done
 

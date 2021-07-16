@@ -33,11 +33,11 @@ if [ "$perdev" != "" ]; then
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $current_partition)"
 			elif [ "$fs" = "apfs" ]; then
-				/opt/drivebadger/internal/kali/mount/apfs.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
+				/opt/drivebadger/internal/generic/mount/apfs.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
 			elif [ "$fs" = "crypto_LUKS" ]; then
-				/opt/drivebadger/internal/kali/mount/luks.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
+				/opt/drivebadger/internal/generic/mount/luks.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
 			else
-				/opt/drivebadger/internal/kali/mount/plain.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid $fs
+				/opt/drivebadger/internal/generic/mount/plain.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid $fs
 			fi
 		fi
 	done
@@ -48,7 +48,7 @@ if [ "$perdev" != "" ]; then
 		current_drive=`/opt/drivebadger/internal/generic/get-partition-drive.sh $current_partition`
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
-		/opt/drivebadger/internal/kali/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition
+		/opt/drivebadger/internal/generic/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition
 	done
 
 	logger "finished processing drives and partitions"

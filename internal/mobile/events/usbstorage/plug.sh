@@ -53,13 +53,13 @@ mv -f $metafile $target_directory/$SERIAL/$BASE.txt
 if [ "$FS" = "swap" ]; then
 	logger "skipping UUID=$UUID (swap partition $BASE)"
 elif [ "$UUID" = "" ]; then
-	/opt/drivebadger/internal/kali/mount/unrecognized.sh $target_directory $target_directory $keys_directory "$SERIAL" $BASE
+	/opt/drivebadger/internal/generic/mount/unrecognized.sh $target_directory $target_directory $keys_directory "$SERIAL" $BASE
 elif [ "$FS" = "apfs" ]; then
-	/opt/drivebadger/internal/kali/mount/apfs.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE $UUID
+	/opt/drivebadger/internal/generic/mount/apfs.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE $UUID
 elif [ "$FS" = "crypto_LUKS" ]; then
-	/opt/drivebadger/internal/kali/mount/luks.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE $UUID
+	/opt/drivebadger/internal/generic/mount/luks.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE $UUID
 else
-	/opt/drivebadger/internal/kali/mount/plain.sh        $target_directory $target_directory $keys_directory "$SERIAL" $BASE $UUID $FS
+	/opt/drivebadger/internal/generic/mount/plain.sh        $target_directory $target_directory $keys_directory "$SERIAL" $BASE $UUID $FS
 fi
 
 show "user_operation_finished"
