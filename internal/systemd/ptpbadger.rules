@@ -1,0 +1,7 @@
+# Rules for Mobile Badger for PTP devices (photo cameras, phones etc.)
+ACTION!="bind", GOTO="ptp_usb_end"
+SUBSYSTEM!="usb", GOTO="ptp_usb_end"
+ENV{ID_USB_INTERFACES}=="", IMPORT{builtin}="usb_id"
+ENV{ID_USB_INTERFACES}=="*:060101:*", TAG+="systemd", PROGRAM="/bin/systemd-escape -p --template=ptpbadger@.service $env{DEVNAME}", ENV{SYSTEMD_WANTS}+="%c"
+
+LABEL="ptp_usb_end"

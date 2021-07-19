@@ -1,3 +1,0 @@
-# Rules for Drive Badger for Raspberry Pi -*- conf -*-
-KERNEL=="sd*", SUBSYSTEMS=="usb", ACTION=="add", PROGRAM="/bin/systemd-escape -p --template=mobilebadger@.service $env{DEVNAME}", ENV{SYSTEMD_WANTS}+="%c"
-KERNEL=="ub*", SUBSYSTEMS=="usb", ACTION=="add", PROGRAM="/bin/systemd-escape -p --template=mobilebadger@.service $env{DEVNAME}", ENV{SYSTEMD_WANTS}+="%c"

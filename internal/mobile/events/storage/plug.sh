@@ -4,7 +4,7 @@
 BASE=`basename $DEVNAME`   # sdb3
 DEVICE=/$DEVNAME           # /dev/sdb3
 
-lock "badger-usb-$BASE"
+lock "badger-storage-$BASE"
 
 keys_directory=`/opt/drivebadger/internal/mobile/get-keys-directory.sh`
 metadata_directory=`/opt/drivebadger/internal/mobile/get-metadata-directory.sh`
