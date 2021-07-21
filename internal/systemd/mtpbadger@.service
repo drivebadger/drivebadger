@@ -1,0 +1,10 @@
+[Unit]
+BindsTo=%i.device
+After=%i.device
+
+[Service]
+Type=oneshot
+TimeoutStartSec=0
+Environment=DEVNAME=%I
+ExecStart=/opt/drivebadger/internal/mobile/events/mtp/plug.sh
+RemainAfterExit=no

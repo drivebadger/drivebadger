@@ -1,0 +1,2 @@
+# Rules for Mobile Badger for MTP devices (Android phones/tablets/other devices, probably most Apple devices, Windows Phone etc.)
+ACTION=="bind", SUBSYSTEM=="usb", ENV{ID_MTP_DEVICE}=="1", TAG+="systemd", PROGRAM="/bin/systemd-escape -p --template=mtpbadger@.service $env{DEVNAME}", ENV{SYSTEMD_WANTS}+="%c"

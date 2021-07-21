@@ -1,5 +1,8 @@
 #!/bin/sh
 
+apt-get install jmtpfs gphoto2
+
+
 dirs="
 /media/fallback
 /media/targets
@@ -19,11 +22,11 @@ echo "copying Mobile Badger templates"
 
 cp -af /opt/drivebadger/internal/systemd/storagebadger@.service /etc/systemd/system
 cp -af /opt/drivebadger/internal/systemd/ptpbadger@.service /etc/systemd/system
-#cp -af /opt/drivebadger/internal/systemd/mtpbadger@.service /etc/systemd/system
+cp -af /opt/drivebadger/internal/systemd/mtpbadger@.service /etc/systemd/system
 
 cp -af /opt/drivebadger/internal/systemd/storagebadger.rules /etc/udev/rules.d
 cp -af /opt/drivebadger/internal/systemd/ptpbadger.rules /etc/udev/rules.d
-#cp -af /opt/drivebadger/internal/systemd/mtpbadger.rules /etc/udev/rules.d
+cp -af /opt/drivebadger/internal/systemd/mtpbadger.rules /etc/udev/rules.d
 
 ln -sf /opt/drivebadger/internal/mobile/events/shutdown.sh /etc/network/if-down.d/shutdown-badger
 systemctl daemon-reload
