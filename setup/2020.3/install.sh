@@ -8,8 +8,8 @@ if [ -f $configparser ]; then
 fi
 
 if [ ! -f /etc/rc.drivebadger ]; then
-	cp /opt/drivebadger/internal/systemd/rc.drivebadger /etc
-	cp /opt/drivebadger/internal/systemd/rc-drivebadger.service /etc/systemd/system
+	cp /opt/drivebadger/setup/systemd/rc.drivebadger /etc
+	cp /opt/drivebadger/setup/systemd/rc-drivebadger.service /etc/systemd/system
 	systemctl daemon-reload
 	systemctl enable rc-drivebadger
 	systemctl enable ssh
