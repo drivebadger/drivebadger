@@ -6,6 +6,6 @@ After=%i.device
 Type=oneshot
 TimeoutStartSec=0
 Environment=DEVNAME=%I
-ExecStart=/opt/drivebadger/internal/mobile/events/storage/plug.sh
-ExecStop=/opt/drivebadger/internal/mobile/events/storage/unplug.sh
+ExecStart=/opt/drivebadger/internal/mobile/events/plug-storage.sh
+ExecStop=/opt/drivebadger/internal/mobile/events/unplug-storage.sh
 RemainAfterExit=yes

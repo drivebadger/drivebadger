@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 . /opt/drivebadger/internal/mobile/functions
 
 BUS=`echo $DEVNAME |cut -d'/' -f4 |sed 's/^0*//'`
@@ -7,7 +7,7 @@ PORT="$BUS,$DEV"
 
 lock "badger-mtp-$BUS-$DEV"
 
-camera=`/opt/drivebadger/internal/generic/ptp/list-mtp-devices.sh |grep :$PORT$ |cut -d: -f1`
+camera=`/opt/drivebadger/internal/generic/devices/list-mtp-devices.sh |grep :$PORT$ |cut -d: -f1`
 if [ "$camera" = "" ]; then exit 0; fi   # unexpected error, resume on next event
 
 logger "plugged $camera (recognized as MTP storage)"

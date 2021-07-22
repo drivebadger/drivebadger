@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 . /opt/drivebadger/internal/mobile/functions
 
 BUS=`echo $DEVNAME |cut -d'/' -f4`
@@ -10,7 +10,7 @@ lock "badger-ptp-$BUS-$DEV"
 metadata_directory=`/opt/drivebadger/internal/mobile/get-metadata-directory.sh`
 metafile=$metadata_directory/ptp-$BUS-$DEV.info
 
-camera=`/opt/drivebadger/internal/generic/ptp/get-ptp-device-name.sh $PORT $metafile`
+camera=`/opt/drivebadger/internal/generic/devices/get-ptp-device-name.sh $PORT $metafile`
 if [ "$camera" = "" ]; then exit 0; fi   # PTP bus error, resume on next event, $metafile was deleted
 
 logger "plugged $camera (recognized as PTP storage)"
@@ -27,7 +27,7 @@ cd $target_directory/$camera
 logger "plugged $camera (downloading new files to $target_directory/$camera)"
 
 mv -f $metafile $target_directory/$camera.info
-/opt/drivebadger/internal/generic/ptp/sync-ptp-device.sh $PORT $target_directory/$camera.log
+/opt/drivebadger/internal/generic/devices/sync-ptp-device.sh $PORT $target_directory/$camera.log
 sync
 
 if [ ! -s $target_directory/$camera.log ] || grep -q '^For debugging messages' $target_directory/$camera.log; then

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 . /opt/drivebadger/internal/mobile/functions
 
 BASE=`basename $DEVNAME`   # sdb3

@@ -6,5 +6,5 @@ After=%i.device
 Type=oneshot
 TimeoutStartSec=0
 Environment=DEVNAME=%I
-ExecStart=/opt/drivebadger/internal/mobile/events/mtp/plug.sh
+ExecStart=/opt/drivebadger/internal/mobile/events/plug-mtp.sh
 RemainAfterExit=no
