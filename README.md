@@ -26,6 +26,16 @@ and use them to automatically expand the attack surface:
 This is a core repository for Drive Badger product. You can visit its homepage for more details: https://drivebadger.com/
 
 
+# Mobile Badger
+
+Drive Badger can be also run in Mobile Badger mode, as standalone solution for Raspberry Pi or similar hardware. Mobile Badger brings data exfiltration support for:
+
+- Android phones, tablets and possibly other devices (Android version from 4.x to latest)
+- Apple iOS-based devices (with iOS 14.x)
+- Windows Phone 8/10 (Lumia phones)
+- all sorts of mobile devices supporting USB data transfer ([details](https://github.com/drivebadger/mobilebadger/wiki))
+
+
 # Further reading
 
 Is Drive Badger for me?
@@ -42,6 +52,12 @@ Ok, I'm interested, what should I read next?
 - [Planning the big attack](https://github.com/drivebadger/drivebadger/wiki/Planning-the-big-attack)
 - [How to configure drive encryption keys before attack?](https://github.com/drivebadger/drivebadger/wiki/How-to-configure-encryption-keys%3F)
 - [Troubleshooting](https://github.com/drivebadger/drivebadger/wiki/Troubleshooting)
+
+Mobile Badger - standalone version of Drive Badger:
+
+- [Recommended hardware - before you buy anything...](https://github.com/drivebadger/mobilebadger/wiki/Recommended-hardware)
+- [Installation manual](https://github.com/drivebadger/mobilebadger/wiki/Installing) and [ready to use install script](https://github.com/drivebadger/mobilebadger/wiki/Install-script).
+- [How the data storage is organized](https://github.com/drivebadger/mobilebadger/wiki/Data-storage)
 
 I want to stay current...
 
