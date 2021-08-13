@@ -14,13 +14,11 @@ subtarget=$target_directory/$drive_serial/${current_partition}_encrypted
 mkdir -p $mountpoint $subtarget $bitlocker_mount
 
 
-for recovery_key in `/opt/drivebadger/internal/generic/keys/get-bitlocker-keys.sh`; do
+for recovery_key in `/opt/drivebadger/internal/generic/keys/get-drive-encryption-keys.sh bitlocker $keys_directory $drive_serial`; do
 	if dislocker /dev/$current_partition -p$recovery_key -- $bitlocker_mount >>$subtarget/rsync.log; then
 
 		echo $recovery_key >$subtarget/bitlocker.key
-		if [ "$drive_serial" != "" ] && ! grep -qFx $recovery_key $keys_directory/$drive_serial.bitlocker 2>/dev/null; then
-			echo $recovery_key >>$keys_directory/$drive_serial.bitlocker
-		fi
+		/opt/drivebadger/internal/generic/keys/save-drive-encryption-key.sh bitlocker $keys_directory $drive_serial $recovery_key
 
 		if mount -o ro $bitlocker_mount/dislocker-file $mountpoint >>$subtarget/rsync.log; then
 			/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
@@ -38,13 +36,11 @@ done
 if [ -d /opt/drivebadger/external/ext-veracrypt ] && [ ! -f $subtarget/bitlocker.key ]; then
 	logger "attempting to decrypt VeraCrypt encrypted system partition $current_partition"
 
-	for recovery_key in `/opt/drivebadger/internal/generic/keys/get-veracrypt-keys.sh`; do
+	for recovery_key in `/opt/drivebadger/internal/generic/keys/get-drive-encryption-keys.sh veracrypt $keys_directory $drive_serial`; do
 		if /opt/drivebadger/external/ext-veracrypt/wrapper.sh -t -k="" -p $recovery_key --pim=0 --mount-options=readonly,system --non-interactive /dev/$current_partition $mountpoint 2>/dev/null; then
 
 			echo $recovery_key >$subtarget/veracrypt.key
-			if [ "$drive_serial" != "" ] && ! grep -qFx $recovery_key $keys_directory/$drive_serial.veracrypt 2>/dev/null; then
-				echo $recovery_key >>$keys_directory/$drive_serial.veracrypt
-			fi
+			/opt/drivebadger/internal/generic/keys/save-drive-encryption-key.sh veracrypt $keys_directory $drive_serial $recovery_key
 
 			/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
