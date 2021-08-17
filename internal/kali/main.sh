@@ -33,11 +33,11 @@ if [ "$perdev" != "" ]; then
 			if [ "$fs" = "swap" ]; then
 				logger "skipping UUID=$uuid (swap partition $current_partition)"
 			elif [ "$fs" = "apfs" ]; then
-				/opt/drivebadger/internal/generic/mount/apfs.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
+				nohup /opt/drivebadger/internal/generic/mount/apfs.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid 2>/dev/null
 			elif [ "$fs" = "crypto_LUKS" ]; then
-				/opt/drivebadger/internal/generic/mount/luks.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid
+				nohup /opt/drivebadger/internal/generic/mount/luks.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid 2>/dev/null
 			else
-				/opt/drivebadger/internal/generic/mount/plain.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid $fs
+				nohup /opt/drivebadger/internal/generic/mount/plain.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition $uuid $fs 2>/dev/null
 			fi
 		fi
 	done
@@ -48,7 +48,7 @@ if [ "$perdev" != "" ]; then
 		current_drive=`/opt/drivebadger/internal/generic/get-partition-drive.sh $current_partition`
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
 
-		/opt/drivebadger/internal/generic/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition
+		nohup /opt/drivebadger/internal/generic/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition 2>/dev/null
 	done
 
 	logger "finished processing drives and partitions"

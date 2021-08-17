@@ -14,9 +14,10 @@ subtarget=$target_directory/$drive_serial/${current_partition}_${fs}
 mkdir -p $mountpoint $subtarget
 
 # no specific support for encrypted drives (loop-aes, TrueCrypt etc.) - just raise an error here
-if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log; then
+if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log 2>>$subtarget/rsync.err; then
 	/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 	logger "copying UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, target directory $subtarget)"
-	nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+	/opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err
+	umount $mountpoint
 fi

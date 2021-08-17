@@ -17,10 +17,11 @@ for slice in $slices; do
 	subtarget=$target_directory/$drive_serial/${current_partition}_apfs_${slid}_${slname}
 	mkdir -p $mountpoint $subtarget
 
-	if /opt/drivebadger/internal/generic/apple/mount-apfs-filesystem.sh $keys_directory "$drive_serial" /dev/$current_partition $slid $mountpoint $subtarget >>$subtarget/rsync.log; then
+	if /opt/drivebadger/internal/generic/apple/mount-apfs-filesystem.sh $keys_directory "$drive_serial" /dev/$current_partition $slid $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err; then
 		/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 		logger "copying UUID=$uuid (partition $current_partition filesystem APFS slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
-		nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+		/opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err
+		umount $mountpoint
 	fi
 done

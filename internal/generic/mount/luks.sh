@@ -14,18 +14,19 @@ subtarget=$target_directory/$drive_serial/${current_partition}_luks
 mkdir -p $mountpoint $subtarget
 
 for recovery_key in `/opt/drivebadger/internal/generic/keys/get-drive-encryption-keys.sh luks $keys_directory $drive_serial`; do
-	echo "$recovery_key" |cryptsetup -q luksOpen /dev/$current_partition luks_$current_partition
+	echo "$recovery_key" |cryptsetup -q luksOpen /dev/$current_partition luks_$current_partition 2>>$subtarget/rsync.err
 	if [ -e /dev/mapper/luks_$current_partition ]; then
 
 		echo $recovery_key >$subtarget/luks.key
 		/opt/drivebadger/internal/generic/keys/save-drive-encryption-key.sh luks $keys_directory $drive_serial $recovery_key
 
-		mount -o ro /dev/mapper/luks_$current_partition $mountpoint >>$subtarget/rsync.log
+		mount -o ro /dev/mapper/luks_$current_partition $mountpoint >>$subtarget/rsync.log 2>>$subtarget/rsync.err
 		/opt/drivebadger/internal/generic/process-hooks.sh $mountpoint $target_root_directory
 
 		logger "copying UUID=$uuid (partition $current_partition filesystem LUKS, mounted as $mountpoint, target directory $subtarget)"
-		nohup /opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log
+		/opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err
 
+		umount $mountpoint
 		cryptsetup luksClose luks_$current_partition
 		break
 	fi
