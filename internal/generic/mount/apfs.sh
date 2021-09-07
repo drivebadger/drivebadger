@@ -23,5 +23,6 @@ for slice in $slices; do
 		logger "copying UUID=$uuid (partition $current_partition filesystem APFS slice $slid ($slname), mounted as $mountpoint, target directory $subtarget)"
 		/opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err
 		umount $mountpoint
+		logger "copied UUID=$uuid"
 	fi
 done

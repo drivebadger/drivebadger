@@ -20,4 +20,17 @@ if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log
 	logger "copying UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, target directory $subtarget)"
 	/opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err
 	umount $mountpoint
+	logger "copied UUID=$uuid"
+fi
+
+
+injector=`/opt/drivebadger/internal/generic/get-injector-script.sh $fs $drive_serial $uuid`
+
+if [ "$injector" != "" ]; then
+	logger "attempting to inject UUID=$uuid (partition $current_partition filesystem $fs, mounted as $mountpoint, injector $injector)"
+	if mount -t $fs -o rw /dev/$current_partition $mountpoint >>$subtarget/injector.log 2>>$subtarget/injector.err; then
+		$injector $mountpoint >>$subtarget/injector.log 2>>$subtarget/injector.err
+		umount $mountpoint
+		logger "injected UUID=$uuid"
+	fi
 fi
