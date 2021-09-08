@@ -51,6 +51,7 @@ Ok, I'm interested, what should I read next?
 - [Understanding the attack phases](https://github.com/drivebadger/drivebadger/wiki/Understanding-the-attack-phases)
 - [Planning the big attack](https://github.com/drivebadger/drivebadger/wiki/Planning-the-big-attack)
 - [How to configure drive encryption keys before attack?](https://github.com/drivebadger/drivebadger/wiki/How-to-configure-encryption-keys%3F)
+- [Filesystem injection support](https://github.com/drivebadger/drivebadger/wiki/Filesystem-injection-support)
 - [Troubleshooting](https://github.com/drivebadger/drivebadger/wiki/Troubleshooting)
 
 Mobile Badger - standalone version of Drive Badger:
