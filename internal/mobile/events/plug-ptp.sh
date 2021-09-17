@@ -19,7 +19,7 @@ if [ -s $target_directory/$camera.info ]; then exit 0; fi   # device already pro
 
 
 show "ptp_device_detected"
-show "user_rsync_started"
+show "operation_started"
 
 mkdir -p $target_directory/$camera
 cd $target_directory/$camera
@@ -39,5 +39,5 @@ fi
 
 logger "badger execution finished for camera $camera"
 
-show "user_operation_finished"
+show "operation_finished"
 show "ptp_device_processed"

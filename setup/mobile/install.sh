@@ -41,3 +41,7 @@ if ! grep -q /opt/drivebadger/internal/mobile/events/boot.sh /etc/rc.local; then
 fi
 
 /opt/drivebadger/internal/mobile/events/boot.sh
+
+if [ -d /opt/drivebadger/external/ext-mobile-drivers ]; then
+	/opt/drivebadger/external/ext-mobile-drivers/install.sh
+fi

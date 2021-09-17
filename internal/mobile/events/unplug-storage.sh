@@ -20,5 +20,4 @@ elif [ "`mount |grep -w $DEVICE`" != "" ]; then
 
 	logger "unplugged $DEVICE (seized drive)"
 	show "user_drive_disconnected"
-	show "target_drive_error_clear"
 fi

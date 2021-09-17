@@ -20,7 +20,7 @@ show "mtp_device_detected"
 mkdir -p /media/mtp/$camera
 jmtpfs -device=$PORT /media/mtp/$camera
 
-show "user_rsync_started"
+show "operation_started"
 logger "plugged $camera (syncing to $target_directory/$camera)"
 
 rsync -av \
@@ -34,7 +34,7 @@ rsync -av \
 
 sync
 logger "plugged $camera (sync finished)"
-show "user_operation_finished"
+show "operation_finished"
 
 logger "attempting to unmount /media/mtp/$camera"
 umount /media/mtp/$camera

@@ -44,7 +44,7 @@ fi
 logger "$DEVICE contains filesystem type $FS ($UUID)"
 show "progress"
 show "user_drive_mounted"
-show "user_rsync_started"
+show "operation_started"
 
 target_directory=`/opt/drivebadger/internal/mobile/get-target-directory.sh`
 mkdir -p $target_directory/$SERIAL
@@ -64,7 +64,7 @@ else
 	/opt/drivebadger/internal/generic/mount/plain.sh        $target_directory $target_directory $keys_directory "$SERIAL" $BASE "$UUID" $FS
 fi
 
-show "user_operation_finished"
+show "operation_finished"
 show "ready"
 logger "badger execution finished for $DEVICE ($UUID)"
 sync

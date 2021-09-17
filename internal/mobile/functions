@@ -6,5 +6,8 @@ lock() {
 }
 
 show() {
-	logger -p user.info -t "badger-event[$$]" -- "$1"
+	if [ ! -d /opt/drivebadger/external/ext-mobile-drivers ]; then
+		logger -p user.info -t "badger-event[$$]" -- "$1"
+	else
+		/opt/drivebadger/external/ext-mobile-drivers/event.sh "$1"
 }
