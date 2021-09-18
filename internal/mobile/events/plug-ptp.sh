@@ -18,8 +18,7 @@ target_directory=`/opt/drivebadger/internal/mobile/get-target-directory.sh`
 if [ -s $target_directory/$camera.info ]; then exit 0; fi   # device already processed (at least started), resume next day
 
 
-show "ptp_device_detected"
-show "operation_started"
+show "media_device_detected"
 
 mkdir -p $target_directory/$camera
 cd $target_directory/$camera
@@ -38,6 +37,4 @@ if [ ! -s $target_directory/$camera.log ] || grep -q '^For debugging messages' $
 fi
 
 logger "badger execution finished for camera $camera"
-
-show "operation_finished"
-show "ptp_device_processed"
+show "media_device_processed"

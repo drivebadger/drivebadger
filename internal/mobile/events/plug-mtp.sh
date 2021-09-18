@@ -15,12 +15,11 @@ target_directory=`/opt/drivebadger/internal/mobile/get-target-directory.sh`
 if [ -s $target_directory/$camera.log.finish ]; then exit 0; fi   # device already processed (at least started), resume next day
 
 
-show "mtp_device_detected"
+show "media_device_detected"
 
 mkdir -p /media/mtp/$camera
 jmtpfs -device=$PORT /media/mtp/$camera
 
-show "operation_started"
 logger "plugged $camera (syncing to $target_directory/$camera)"
 
 rsync -av \
@@ -34,7 +33,6 @@ rsync -av \
 
 sync
 logger "plugged $camera (sync finished)"
-show "operation_finished"
 
 logger "attempting to unmount /media/mtp/$camera"
 umount /media/mtp/$camera
@@ -50,4 +48,4 @@ else
 fi
 
 logger "badger execution finished for camera $camera"
-show "mtp_device_processed"
+show "media_device_processed"
