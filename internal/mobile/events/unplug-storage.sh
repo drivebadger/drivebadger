@@ -19,5 +19,5 @@ elif [ "`mount |grep -w $DEVICE`" != "" ]; then
 	umount -l $DEVICE
 
 	logger "unplugged $DEVICE (seized drive)"
-	show "user_drive_disconnected" $DEVICE
+	show "operation_finished" $DEVICE
 fi
