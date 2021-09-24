@@ -1,6 +1,6 @@
 #!/bin/sh
 
-apt-get install jmtpfs gphoto2 cryptsetup
+apt-get install jmtpfs gphoto2 ntfs-3g cryptsetup
 
 
 dirs="
