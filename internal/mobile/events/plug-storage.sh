@@ -24,11 +24,11 @@ elif [ "$UUID" != "" ] && grep -q "UUID=$UUID" /etc/fstab; then
 	mount -U $UUID || logger "mount by UUID with $UUID wasn't successful; return code $?"
 	mv -f $metafile $metafile.fstab
 	exit 0
-elif [ "$UUID" != "" ] && [ "`echo $UUID |grep -ixFf /etc/drivebadger/drives/ignore.list`" != "" ]; then
+elif [ "$UUID" != "" ] && [ "`echo $UUID |grep -ixFf /var/cache/drivebadger/ignore.uuid.generated`" != "" ]; then
 	logger "ignoring $DEVICE ($UUID)"
 	rm -f $metafile
 	exit 0
-elif [ "$UUID" != "" ] && [ "`echo $UUID |grep -ixFf /etc/drivebadger/drives/target.list`" != "" ]; then
+elif [ "$UUID" != "" ] && [ "`echo $UUID |grep -ixFf /var/cache/drivebadger/target.uuid.generated`" != "" ]; then
 	logger "mounting $DEVICE as target drive ($UUID)"
 	mountpoint=/media/targets/$BASE
 	mkdir -p $mountpoint

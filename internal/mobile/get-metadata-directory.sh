@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo /etc/drivebadger/metadata
+echo /var/cache/drivebadger/metadata

@@ -11,3 +11,7 @@ update="
 for PD in $update; do
 	/opt/drivebadger/internal/git/pull.sh $PD
 done
+
+if [ ! -d /run/live/persistence ]; then
+	/opt/drivebadger/internal/mobile/rebuild-uuid-lists.sh
+fi

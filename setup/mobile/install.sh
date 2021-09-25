@@ -6,7 +6,7 @@ apt-get install jmtpfs gphoto2 ntfs-3g cryptsetup
 dirs="
 /media/fallback
 /media/targets
-/etc/drivebadger/drives
+/var/cache/drivebadger
 `/opt/drivebadger/internal/mobile/get-keys-directory.sh`
 `/opt/drivebadger/internal/mobile/get-metadata-directory.sh`
 "
@@ -15,7 +15,7 @@ for MD in $dirs; do
 	mkdir -p $MD
 done
 
-touch /etc/drivebadger/drives/ignore.list /etc/drivebadger/drives/target.list
+/opt/drivebadger/internal/mobile/rebuild-uuid-lists.sh
 
 
 echo "copying Mobile Badger templates"
