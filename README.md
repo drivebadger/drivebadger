@@ -15,7 +15,7 @@ It is able to exfiltrate data off encrypted hard drives - it currently supports 
 - [VeraCrypt](https://github.com/drivebadger/drivebadger/wiki/Encryption-support-(VeraCrypt))
 - [LUKS](https://github.com/drivebadger/drivebadger/wiki/Encryption-support-(LUKS))
 
-Support for other encryption schemes is also planned (see [project roadmap](https://github.com/drivebadger/drivebadger/wiki/Roadmap)).
+Support for other encryption schemes is also planned (see [project roadmap](https://github.com/drivebadger/project/wiki/Roadmap)).
 
 Drive Badger runs below the operating system level - so it doesn't need any passwords (eg. Active Directory) to exfiltrated computers. Instead, it is able to discover several types of passwords on its own,
 and use them to automatically expand the attack surface:
@@ -41,16 +41,16 @@ Drive Badger can be also run in Mobile Badger mode, as standalone solution for R
 Is Drive Badger for me?
 
 - [Why ever use Drive Badger? This can be done manually, or by ad-hoc script.](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(beginner))
-- [Legal and risk-related questions: when using Drive Badger is legal?](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(legal))
+- [Legal and risk-related questions: when using Drive Badger is legal?](https://github.com/drivebadger/project/wiki/Legal-questions)
 - [Recommended hardware - before you buy anything...](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware)
 
 Ok, I'm interested, what should I read next?
 
 - [How to start?](https://github.com/drivebadger/drivebadger/wiki/How-to-start%3F)
 - [Installation manual](https://github.com/drivebadger/drivebadger/wiki/Installing) and [ready to use install script](https://github.com/drivebadger/drivebadger/wiki/Install-script).
-- [Understanding the attack phases](https://github.com/drivebadger/drivebadger/wiki/Understanding-the-attack-phases)
-- [Planning the big attack](https://github.com/drivebadger/drivebadger/wiki/Planning-the-big-attack)
-- [How to configure drive encryption keys before attack?](https://github.com/drivebadger/drivebadger/wiki/How-to-configure-encryption-keys%3F)
+- [Understanding the boot process](https://github.com/drivebadger/drivebadger/wiki/Understanding-the-boot-process)
+- [Planning the big attack](https://github.com/drivebadger/fieldmanual/wiki/Planning-the-big-attack)
+- [How to configure drive encryption keys before attack?](https://github.com/drivebadger/fieldmanual/wiki/Configuring-encryption-keys)
 - [Filesystem injection support](https://github.com/drivebadger/drivebadger/wiki/Filesystem-injection-support)
 - [Troubleshooting](https://github.com/drivebadger/drivebadger/wiki/Troubleshooting)
 
@@ -59,11 +59,12 @@ Mobile Badger - standalone version of Drive Badger:
 - [Recommended hardware - before you buy anything...](https://github.com/drivebadger/mobilebadger/wiki/Recommended-hardware)
 - [Installation manual](https://github.com/drivebadger/mobilebadger/wiki/Installing) and [ready to use install script](https://github.com/drivebadger/mobilebadger/wiki/Install-script).
 - [How the data storage is organized](https://github.com/drivebadger/mobilebadger/wiki/Data-storage)
+- [Event display: what is actually happening with your device?](https://github.com/drivebadger/mobilebadger/wiki/Events-display)
 
 I want to stay current...
 
-- [News](https://github.com/drivebadger/drivebadger/wiki/News)
-- [Project roadmap](https://github.com/drivebadger/drivebadger/wiki/Roadmap)
+- [News](https://github.com/drivebadger/project/wiki/News)
+- [Project roadmap](https://github.com/drivebadger/project/wiki/Roadmap)
 
 
 # Legal information
