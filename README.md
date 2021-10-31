@@ -40,7 +40,7 @@ Drive Badger can be also run in Mobile Badger mode, as standalone solution for R
 
 Is Drive Badger for me?
 
-- [Why ever use Drive Badger? This can be done manually, or by ad-hoc script.](https://github.com/drivebadger/drivebadger/wiki/Frequently-Asked-Questions-(beginner))
+- [Why ever use Drive Badger? This can be done manually, or by ad-hoc script.](https://github.com/drivebadger/project/wiki/Frequently-Asked-Questions)
 - [Legal and risk-related questions: when using Drive Badger is legal?](https://github.com/drivebadger/project/wiki/Legal-questions)
 - [Recommended hardware - before you buy anything...](https://github.com/drivebadger/drivebadger/wiki/Recommended-hardware)
 
