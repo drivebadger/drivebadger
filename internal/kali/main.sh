@@ -47,8 +47,14 @@ if [ "$perdev" != "" ]; then
 	for current_partition in `/opt/drivebadger/internal/generic/get-udev-unrecognized-devices.sh`; do
 		current_drive=`/opt/drivebadger/internal/generic/get-partition-drive.sh $current_partition`
 		drive_serial=`/opt/drivebadger/internal/generic/get-drive-serial.sh $current_drive $target_directory`
+		fs=`/opt/drivebadger/internal/generic/get-partition-fs-type.sh $current_partition $target_directory`
 
-		nohup /opt/drivebadger/internal/generic/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition 2>/dev/null
+		if [ "$fs" = "VMFS_volume_member" ]; then
+			nohup /opt/drivebadger/internal/generic/mount/vmfs.sh         $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition 2>/dev/null
+		else
+			nohup /opt/drivebadger/internal/generic/mount/unrecognized.sh $target_root_directory $target_directory $keys_directory "$drive_serial" $current_partition 2>/dev/null
+		fi
+
 	done
 
 	logger "finished processing drives and partitions"

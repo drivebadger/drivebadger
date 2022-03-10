@@ -17,11 +17,12 @@ It is able to exfiltrate data off encrypted hard drives - it currently supports 
 
 Support for other encryption schemes is also planned (see [project roadmap](https://github.com/drivebadger/project/wiki/Roadmap)).
 
-Drive Badger runs below the operating system level - so it doesn't need any passwords (eg. Active Directory) to exfiltrated computers. Instead, it is able to discover several types of passwords on its own,
-and use them to automatically expand the attack surface:
+Drive Badger runs below the operating system level - so it doesn't need any passwords (eg. Active Directory) to exfiltrated computers. Instead, it is able to discover
+several types of passwords and other resources on its own, and use them to automatically expand the attack surface:
 
 - on Windows computers, decode FTP passwords saved by Total Commander and use them to exfiltrate data off FTP servers using exfiltrated computer's IP
 - on Linux computers, exfiltrate `smb` and `nfs` shares defined statically in `/etc/fstab`
+- on VMware servers, mount VMDK virtual drive images and recursively exfiltrate virtual machine contents
 
 This is a core repository for Drive Badger product. You can visit its homepage for more details: https://drivebadger.com/
 

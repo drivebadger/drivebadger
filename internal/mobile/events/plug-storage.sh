@@ -58,6 +58,8 @@ elif [ "$FS" = "apfs" ]; then
 	/opt/drivebadger/internal/generic/mount/apfs.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE "$UUID"
 elif [ "$FS" = "crypto_LUKS" ]; then
 	/opt/drivebadger/internal/generic/mount/luks.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE "$UUID"
+elif [ "$FS" = "VMFS_volume_member" ]; then
+	/opt/drivebadger/internal/generic/mount/vmfs.sh         $target_directory $target_directory $keys_directory "$SERIAL" $BASE
 else
 	/opt/drivebadger/internal/generic/mount/plain.sh        $target_directory $target_directory $keys_directory "$SERIAL" $BASE "$UUID" $FS
 fi
