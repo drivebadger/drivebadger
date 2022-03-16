@@ -17,6 +17,8 @@ if [[ $drive =~ ^mmc ]]; then
 	grep 'ATTRS{serial}' $directory/$drive.txt |tr -d ' \t\"' |tr '=' ' ' |awk '{ print $2 }'
 elif [[ $drive =~ ^nvme ]]; then
 	cat $directory/$drive.txt |tr -d ' \t' |grep ^sn: |cut -d':' -f2
-else
+elif grep -q "Serial Number" $directory/$drive.txt; then
 	cat $directory/$drive.txt |tr -d ' \t' |grep ^SerialNumber: |cut -d':' -f2
+else
+	ls -l /dev/disk/by-id/* |grep /$drive$ |grep -v wwn- |cut -d'/' -f5 |cut -d'-' -f2- |sed -e "s/ -> ..//g" -e "s/-0:0//g"
 fi
