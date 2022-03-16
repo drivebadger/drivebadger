@@ -17,6 +17,7 @@ if vmfs6-fuse /dev/$current_partition $mountpoint >>$subtarget/rsync.log 2>>$sub
 
 	logger "copying VMFS (partition $current_partition, mounted as $mountpoint, target directory $subtarget)"
 	/opt/drivebadger/internal/generic/rsync-partition.sh $mountpoint $subtarget >>$subtarget/rsync.log 2>>$subtarget/rsync.err
-	umount $mountpoint
 	logger "copied VMFS $current_partition"
+
+	# intentionally do NOT umount $mountpoint here (tasks created by hook-virtual may be in progress)
 fi

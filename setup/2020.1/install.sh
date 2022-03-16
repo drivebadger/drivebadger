@@ -1,6 +1,6 @@
 #!/bin/sh
 
-apt-get install mc htop python-configparser nvme-cli dislocker libfsapfs-utils libfuse2 libguestfs-tools vmfs-tools vmfs6-tools
+apt-get install mc htop python-configparser nvme-cli dislocker libfsapfs-utils libfuse2 libguestfs-tools vmfs-tools vmfs6-tools lz4 task-spooler
 
 if [ ! -f /etc/rc.drivebadger ]; then
 	cp /opt/drivebadger/setup/systemd/rc.drivebadger /etc
