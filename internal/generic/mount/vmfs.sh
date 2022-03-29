@@ -20,4 +20,6 @@ if vmfs6-fuse /dev/$current_partition $mountpoint >>$subtarget/rsync.log 2>>$sub
 	logger "copied VMFS $current_partition"
 
 	# intentionally do NOT umount $mountpoint here (tasks created by hook-virtual may be in progress)
+else
+	logger "error mounting VMFS (partition $current_partition, attempted mount as $mountpoint, target directory $subtarget)"
 fi

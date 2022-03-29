@@ -41,4 +41,6 @@ if mount -t $fs -o ro /dev/$current_partition $mountpoint >>$subtarget/rsync.log
 	if [ "`ps aux |grep \"tsp /opt/drivebadger\" |grep $mountpoint`" = "" ]; then
 		umount $mountpoint
 	fi
+else
+	logger "error mounting UUID=$uuid (partition $current_partition filesystem $fs, attempted mount as $mountpoint, target directory $subtarget)"
 fi
