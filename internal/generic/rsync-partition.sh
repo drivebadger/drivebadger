@@ -2,7 +2,7 @@
 
 src=$1
 target=$2
-lists=`/opt/drivebadger/internal/generic/get-rsync-exclusion-lists.sh`
+lists=`/opt/drivebadger/internal/generic/get-rsync-exclusion-lists.sh $src`
 
 echo "### BEGIN `date +'%Y-%m-%d %H:%M:%S'` ###"
 
